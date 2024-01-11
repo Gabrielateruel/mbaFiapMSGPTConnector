@@ -41,7 +41,6 @@ public class GptMicroservice {
     }
 
     private String callGptApi(String input) {
-        // Substitua a URL pela do seu endpoint GPT
         String gptApiUrl = "URL_DO_SEU_ENDPOINT_DO_GPT";
     
         // Criando cabeçalhos para a requisição
