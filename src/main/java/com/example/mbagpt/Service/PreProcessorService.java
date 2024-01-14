@@ -1,16 +1,17 @@
-package com.example.mbagpt.Connector;
+package com.example.mbagpt.Service;
+import org.springframework.stereotype.Service;
 
-import org.springframework.stereotype.Component;
+import com.example.mbagpt.Model.MessageDTO;
 
-@Component
-public class PreProcessor {
+@Service
+public class PreProcessorService {
 
     public String processInput(String input) {
         String cleanedInput = removeSpecialCharacters(input);
         String lowercaseInput = cleanedInput.toLowerCase();
         String[] tokens = tokenize(lowercaseInput);
         String processedInput = removeStopWords(tokens);
-        return processedInput;  
+        return processedInput;
     }
 
     private String removeSpecialCharacters(String input) {
@@ -39,6 +40,12 @@ public class PreProcessor {
             }
         }
         return false;
+    }
+
+    public MessageDTO generateAssistantMessage() {
+        String content = "Your are a helpful assistant that responds to any context in detail, giving complete answers and deep explanations around the topic being questioned.";
+        MessageDTO messageDTO = MessageDTO.builder().role("assitant").content(content).build();
+        return messageDTO;
     }
 }
 
