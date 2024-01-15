@@ -14,15 +14,15 @@ public class PreProcessorService {
         return processedInput;
     }
 
-    private String removeSpecialCharacters(String input) {
-        return input.replaceAll("[^a-zA-Z0-9]", " ");
+    public String removeSpecialCharacters(String input) {
+        return input.replaceAll("[^a-zA-Z0-9]", " ").trim();
     }
 
-    private String[] tokenize(String input) {
+    public String[] tokenize(String input) {
         return input.split("\\s+");
     }
 
-    private String removeStopWords(String[] tokens) {
+    public String removeStopWords(String[] tokens) {
         StringBuilder result = new StringBuilder();
         for (String token : tokens) {
             if (!isStopWord(token)) {
@@ -32,8 +32,22 @@ public class PreProcessorService {
         return result.toString().trim();
     }
 
-    private boolean isStopWord(String word) {
-        String[] stopWords = {"the", "and", "is"};
+    public boolean isStopWord(String word) {
+        String[] stopWords = {
+            "i", "me", "my", "myself", "we", "our", "ours", "ourselves",
+            "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself",
+            "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their",
+            "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these",
+            "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has",
+            "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if",
+            "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about",
+            "against", "between", "into", "through", "during", "before", "after", "above",
+            "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under",
+            "again", "further", "then", "once", "here", "there", "when", "where", "why", "how",
+            "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no",
+            "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can",
+            "will", "just", "don", "should", "now"
+        };
         for (String stopWord : stopWords) {
             if (stopWord.equalsIgnoreCase(word)) {
                 return true;

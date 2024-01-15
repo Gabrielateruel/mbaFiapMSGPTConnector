@@ -6,16 +6,16 @@ import org.springframework.stereotype.Service;
 public class PostProcessorService {
 
     public String processOutput(String output) {
-        String postProcessedOutput = cleanText(output);
-        postProcessedOutput = removeSpecialCharacters(postProcessedOutput);
+        String postProcessedOutput = removeSpecialCharacters(output);
+        postProcessedOutput = cleanText(postProcessedOutput);
         return postProcessedOutput;
     }
 
-    private static String cleanText(String text) {
-        return text.trim().replaceAll("\\s+", " ").replaceAll("\\t", "   ");
+    public static String cleanText(String text) {
+        return text.replaceAll("\\s+", " ").replaceAll("\\t", "   ").trim();
     }
 
-    private String removeSpecialCharacters(String input) {
-        return input.replaceAll("[^a-zA-Z0-9]", " ");
+    public String removeSpecialCharacters(String input) {
+        return input.replaceAll("[^a-zA-Z0-9]", " ").trim();
     }
 }
