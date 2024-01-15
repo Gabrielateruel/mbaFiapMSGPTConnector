@@ -33,9 +33,8 @@ public class GptCallService {
         String preProcessedInput = preProcessor.processInput(input);
         ResponseEntity<String> gptResponse;
         try {
-            gptResponse = callGptApi(preProcessedInput);
+            gptResponse = callGptApi(preProcessedInput, new RestTemplate());
         } catch (Exception e) {
-            // Tratar a exceção conforme necessário
             e.printStackTrace();
             throw e;
         }
@@ -43,31 +42,25 @@ public class GptCallService {
         return postProcessedOutput;
     }
 
-    private ResponseEntity<String> callGptApi(String input) {
-
+    public ResponseEntity<String> callGptApi(String input, RestTemplate restTemplate) {
         List<MessageDTO> messages = buildListMessages(input);
         ChatRequestDTO request = ChatRequestDTO.builder().messages(messages).build();
 
-        // Criando cabeçalhos para a requisição
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(openaiApiKey);
 
-        // Montando o corpo da requisição
         String requestBody = "{\"messages\": " + request.messagesToObjArray() + "}";
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        // Chamada à API do GPT
-        RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(
                 request.getUrl(),
                 HttpMethod.POST,
                 requestEntity,
                 String.class);
-
     }
 
-    private List<MessageDTO> buildListMessages(String input) {
+    public List<MessageDTO> buildListMessages(String input) {
         MessageDTO message = MessageDTO.builder().role("User").content(input).build();
         MessageDTO assistantMessage = preProcessor.generateAssistantMessage();
         List<MessageDTO> messages = new ArrayList<MessageDTO>();

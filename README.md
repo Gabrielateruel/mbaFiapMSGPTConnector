@@ -9,12 +9,20 @@ Integrantes
 O microsserviço criado tem como objetivo automatizar uma chamada ao ChatGPT da OpenAI, incluindo a chamada de API, funções de pré-processamento e pós-processamento.
 
 ### Pré processamento
+Os seguintes pré-processamentos são realizados:
+- Remoção de caracteres especiais
+- Transformação da string para Lower Case
+- Tokenização (Divisão da string em tokens)
+- Remoção de Stop words
 
 
 ### Chamada ao ChatGPT
 Para conseguir realizar a chamada ao ChatGPT é preciso inserir a chave de API no arquivo "application.properties".
 
 ### Pós processamento
+Os seguintes pós processamentos foram realizados:
+- Limpeza de caracteres de espaçamento
+- Remoção de caracteres especiais
 
 ### Estrutura do microsserviço
 
@@ -22,6 +30,7 @@ O microsserviço foi desenvolvido em Java com o Framework Spring. Os testes fora
 
 A estrutura do projeto é:
 .
+├── application.properties
 ├── mvnw
 ├── mvnw.cmd
 ├── pom.xml
@@ -51,4 +60,8 @@ A estrutura do projeto é:
 │           └── com
 │               └── example
 │                   └── mbagpt
-│                       └── MbaGptApplicationTests.java
+│                       ├── MbaGptApplicationTests.java
+│                       └── Service
+│                           ├── GptCallServiceTest.java
+│                           ├── PostProcessorServiceTest.java
+│                           └── PreProcessorServiceTest.java
